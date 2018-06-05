@@ -182,11 +182,32 @@ public class CacheWebViewClient extends WebViewClient {
         if (mCustomWebViewClient!=null){
             boolean ret =  mCustomWebViewClient.shouldOverrideUrlLoading(view,request);
             if (ret){
-                return true;
+                if (request.getUrl().toString().startsWith(Constants.SCHEME)) {
+                    if (request.getUrl().toString().indexOf(Constants.BRIDGE_LOADED) > 0) {
+                        mCacheWebView.injectJavascriptFile();
+                    }else if (request.getUrl().toString().indexOf(Constants.MESSAGE) > 0) {
+                        mCacheWebView.flushMessageQueue();
+                    }else {
+                        Logger.d("UnkownMessage:" + request.getUrl().toString());
+                    }
+                    return true;
+                }
+//                return true;
+                return super.shouldOverrideUrlLoading(view, request);
             }
         }
         view.loadUrl(request.getUrl().toString());
-        return true;
+        if (request.getUrl().toString().startsWith(Constants.SCHEME)) {
+            if (request.getUrl().toString().indexOf(Constants.BRIDGE_LOADED) > 0) {
+                mCacheWebView.injectJavascriptFile();
+            }else if (request.getUrl().toString().indexOf(Constants.MESSAGE) > 0) {
+                mCacheWebView.flushMessageQueue();
+            }else {
+                Logger.d("UnkownMessage:" + request.getUrl().toString());
+            }
+            return true;
+        }
+        return super.shouldOverrideUrlLoading(view, request);
     }
 
     @Override
