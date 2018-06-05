@@ -14,8 +14,8 @@ public class CacheExtensionConfig
     private static HashSet STATIC = new HashSet()
     {
         {
-            add("html");
-            add("htm");
+//            add("html");
+//            add("htm");
             add("js");
             add("ico");
             add("css");
@@ -54,8 +54,8 @@ public class CacheExtensionConfig
     private static HashSet STATIC_RAM = new HashSet()
     {
         {
-            add("html");
-            add("htm");
+//            add("html");
+//            add("htm");
             add("js");
             add("css");
             add("xml");
