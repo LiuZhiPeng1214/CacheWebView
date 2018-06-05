@@ -39,8 +39,10 @@ final class CacheWebViewClient extends WebViewClient {
     private HashMap<String,Map> mHeaderMaps;
 
     private WebViewCache mWebViewCache;
+    private CacheWebView mCacheWebView;
 
-    public CacheWebViewClient(){
+    public CacheWebViewClient(CacheWebView cacheWebView){
+        mCacheWebView = cacheWebView;
         mHeaderMaps = new HashMap<>();
         mVisitVectorUrl = new Vector<>();
     }
@@ -145,11 +147,32 @@ final class CacheWebViewClient extends WebViewClient {
         if (mCustomWebViewClient!=null){
             boolean ret =  mCustomWebViewClient.shouldOverrideUrlLoading(view,url);
             if (ret){
-                return true;
+                if (url.startsWith(Constants.SCHEME)) {
+                    if (url.indexOf(Constants.BRIDGE_LOADED) > 0) {
+                        mCacheWebView.injectJavascriptFile();
+                    }else if (url.indexOf(Constants.MESSAGE) > 0) {
+                        mCacheWebView.flushMessageQueue();
+                    }else {
+                        Logger.d("UnkownMessage:" + url);
+                    }
+                    return true;
+                }
+                return super.shouldOverrideUrlLoading(view, url);
             }
         }
         view.loadUrl(url);
-        return true;
+        if (url.startsWith(Constants.SCHEME)) {
+            if (url.indexOf(Constants.BRIDGE_LOADED) > 0) {
+                mCacheWebView.injectJavascriptFile();
+            }else if (url.indexOf(Constants.MESSAGE) > 0) {
+                mCacheWebView.flushMessageQueue();
+            }else {
+                Logger.d("UnkownMessage:" + url);
+            }
+            return true;
+        }
+        return super.shouldOverrideUrlLoading(view, url);
+//        return true;
     }
 
     @TargetApi(Build.VERSION_CODES.N)
