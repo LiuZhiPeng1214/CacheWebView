@@ -25,7 +25,7 @@ import java.util.Vector;
  * Created by yale on 2017/9/15.
  */
 
-final class CacheWebViewClient extends WebViewClient {
+ class CacheWebViewClient extends WebViewClient {
 
 
     public WebViewClient mCustomWebViewClient;
