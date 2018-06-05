@@ -192,11 +192,10 @@ public class CacheWebViewClient extends WebViewClient {
                     }
                     return true;
                 }
-//                return true;
-                return super.shouldOverrideUrlLoading(view, request);
+                return true;
             }
         }
-        view.loadUrl(request.getUrl().toString());
+
         if (request.getUrl().toString().startsWith(Constants.SCHEME)) {
             if (request.getUrl().toString().indexOf(Constants.BRIDGE_LOADED) > 0) {
                 mCacheWebView.injectJavascriptFile();
