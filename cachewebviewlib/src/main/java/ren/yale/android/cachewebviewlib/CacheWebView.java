@@ -202,7 +202,7 @@ public class CacheWebView extends WebView {
         sendData(data, callback, handlerName);
     }
 
-    private void registerHandler(String handlerName, WVJHandler handler) {
+    public void registerHandler(String handlerName, WVJHandler handler) {
         if (TextUtils.isEmpty(handlerName) || handler == null)
             return;
         messageHandlers.put(handlerName, handler);
