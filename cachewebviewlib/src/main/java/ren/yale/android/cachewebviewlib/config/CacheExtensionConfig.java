@@ -18,7 +18,7 @@ public class CacheExtensionConfig
 //            add("htm");
             add("js");
             add("ico");
-            add("css");
+//            add("css");
             add("png");
             add("jpg");
             add("jpeg");
@@ -57,7 +57,7 @@ public class CacheExtensionConfig
 //            add("html");
 //            add("htm");
             add("js");
-            add("css");
+//            add("css");
             add("xml");
             add("txt");
             add("text");
